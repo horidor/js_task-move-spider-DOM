@@ -5,17 +5,16 @@ const $wall = document.querySelector('div.wall');
 
 $wall.addEventListener('click', (e) => {
   // write code here
-  e.preventDefault();
 
   const wallRect = $wall.getBoundingClientRect();
   const spiderRect = $spider.getBoundingClientRect();
   const borderTop = parseInt(getComputedStyle($wall).borderTopWidth);
   const borderLeft = parseInt(getComputedStyle($wall).borderLeftWidth);
 
-  const borderOffsetTop = borderTop * 2;
   const borderOffsetLeft = borderLeft * 2;
-  const maxPosX = wallRect.width - borderOffsetTop - spiderRect.width;
-  const maxPosY = wallRect.height - borderOffsetLeft - spiderRect.height;
+  const borderOffsetTop = borderTop * 2;
+  const maxPosX = wallRect.width - borderOffsetLeft - spiderRect.width;
+  const maxPosY = wallRect.height - borderOffsetTop - spiderRect.height;
 
   // This is actually the correct way to calculate position that is relative.
   // Parent's top and left begin from topmost and leftmost point, INCLUDING
