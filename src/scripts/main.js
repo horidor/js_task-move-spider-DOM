@@ -12,11 +12,10 @@ $wall.addEventListener('click', (e) => {
   const borderTop = parseInt(getComputedStyle($wall).borderTopWidth);
   const borderLeft = parseInt(getComputedStyle($wall).borderLeftWidth);
 
-  const borderOffset = borderTop * 2;
-  const maxPosX = wallRect.right - borderOffset - spiderRect.width;
-  const maxPosY = wallRect.bottom - borderOffset - spiderRect.height;
-  const minPosX = wallRect.left;
-  const minPosY = wallRect.top;
+  const borderOffsetTop = borderTop * 2;
+  const borderOffsetLeft = borderLeft * 2;
+  const maxPosX = wallRect.width - borderOffsetTop - spiderRect.width;
+  const maxPosY = wallRect.height - borderOffsetLeft - spiderRect.height;
 
   // This is actually the correct way to calculate position that is relative.
   // Parent's top and left begin from topmost and leftmost point, INCLUDING
@@ -26,11 +25,11 @@ $wall.addEventListener('click', (e) => {
   // EXCLUDING border. Therefore, to actually make coordinates begin from
   // correct top and left points, we need to additionaly subtract borderTop
   // and borderLeft. Why? I don't know. Tests fail if completed otherwise.
-  const clickX = e.clientX - spiderRect.width / 2 - borderTop;
-  const clickY = e.clientY - spiderRect.height / 2 - borderLeft;
+  const clickX = e.clientX - spiderRect.width / 2 - borderLeft - wallRect.x;
+  const clickY = e.clientY - spiderRect.height / 2 - borderTop - wallRect.y;
 
-  const newPosX = Math.max(Math.min(clickX, maxPosX), minPosX) - wallRect.x;
-  const newPosY = Math.max(Math.min(clickY, maxPosY), minPosY) - wallRect.y;
+  const newPosX = Math.max(Math.min(clickX, maxPosX), 0);
+  const newPosY = Math.max(Math.min(clickY, maxPosY), 0);
 
   $spider.style.top = `${newPosY}px`;
   $spider.style.left = `${newPosX}px`;
