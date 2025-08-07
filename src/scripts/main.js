@@ -18,6 +18,14 @@ $wall.addEventListener('click', (e) => {
   const minPosX = wallRect.left;
   const minPosY = wallRect.top;
 
+  // This is actually the correct way to calculate position that is relative.
+  // Parent's top and left begin from topmost and leftmost point, INCLUDING
+  // border. That's why borderTop and borderLeft is added, because
+  // further calculation subtract wallRect object x and y keys, which, for
+  // some reason, correspond to the element topmost and leftmost point,
+  // EXCLUDING border. Therefore, to actually make coordinates begin from
+  // correct top and left points, we need to additionaly subtract borderTop
+  // and borderLeft. Why? I don't know. Tests fail if completed otherwise.
   const clickX = e.clientX - spiderRect.width / 2 - borderTop;
   const clickY = e.clientY - spiderRect.height / 2 - borderLeft;
 
